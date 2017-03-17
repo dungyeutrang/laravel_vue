@@ -7,9 +7,10 @@ use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
+        $title = 'Hello world';
+        return view('admin.category.index', compact('title'));
     }
 
 }

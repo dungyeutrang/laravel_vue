@@ -19,7 +19,7 @@ Route::get('/logout','Auth\LoginController@logout');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('admin');
     Route::group(['prefix' => 'category'], function () {
-
+        Route::get('/', 'CategoryController@index')->name('category.list');
     });
 });
 
