@@ -20,6 +20,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::get('/', 'HomeController@index')->name('admin');
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'CategoryController@index')->name('category.list');
+        Route::get('/getData', 'CategoryController@getData')->name('category.getData');
+        Route::get('/delete/{id}', 'CategoryController@delete')->name('category.delete');
+        Route::get('/edit/{id?}', 'CategoryController@edit')->name('category.edit');
+        Route::get('/getRecord/{id}', 'CategoryController@getRecord')->name('category.getRecord');
     });
 });
 

@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -15,6 +14,9 @@ require('admin-lte');
 window.toastr = require('toastr');
 require('icheck');
 
+let moment = require('moment');
+let VueResource = require('vue-resource');
+
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean
@@ -22,6 +24,14 @@ require('icheck');
  */
 
 window.Vue = require('vue');
+Vue.use(VueResource);
+
+Vue.filter('formatDate', function (value) {
+    if (value) {
+        return moment(String(value)).format('YYYY-MM-DD')
+    }
+});
+
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

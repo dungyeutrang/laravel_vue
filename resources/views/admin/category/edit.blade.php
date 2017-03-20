@@ -4,20 +4,20 @@
 @endsection
 
 @section('contentheader_title')
-    List Category
+    Create Category
 @endsection
 
 @section('main-content')
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <example :data="listData"></example>
+                <example id="{{$id}}"></example>
             </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
-    <script src="{{asset('js/admin/category/index.js')}}"></script>
     @parent
+    <script src="{{asset('js/admin/category/edit.js')}}"></script>
 @endsection
