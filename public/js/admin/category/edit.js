@@ -59359,6 +59359,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     props: ['id'],
@@ -59366,7 +59376,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return { name: '' };
     },
     mounted: function mounted() {
-        this.getData();
+        if (this.id) {
+            this.getData();
+        }
     },
     methods: {
         getData: function getData() {
@@ -59430,7 +59442,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [(_vm.id) ? _c('span', [_vm._v(" Edit Category ")]) : _c('span', [_vm._v("  Create Category ")])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_c('span', [_vm._v(_vm._s(_vm.name))])])])])
+  }, [_c('form', {
+    staticClass: "form form-vertical",
+    attrs: {
+      "action": ""
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.name),
+      expression: "name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "name",
+      "id": "name"
+    },
+    domProps: {
+      "value": (_vm.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('a', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "href": "/admin/category"
+    }
+  }, [_vm._v("Back")]), _vm._v(" "), (_vm.id) ? _c('button', {
+    staticClass: "btn btn-success"
+  }, [_vm._v("Update")]) : _c('button', {
+    staticClass: "btn btn-success"
+  }, [_vm._v("Add")])])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

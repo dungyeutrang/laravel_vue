@@ -6,7 +6,17 @@
                 <span v-else>  Create Category </span>
             </div>
             <div class="panel-body">
-                <span>{{name}}</span>
+                <form action="" class="form form-vertical">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" v-model="name" name="name" id="name">
+                    </div>
+                    <div class="form-group">
+                        <a href="/admin/category" class="btn btn-default" >Back</a>
+                        <button class="btn btn-success" v-if="id">Update</button>
+                        <button class="btn btn-success" v-else>Add</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -18,7 +28,9 @@
             return {name: ''};
         },
         mounted: function () {
-            this.getData();
+            if (this.id) {
+                this.getData();
+            }
         },
         methods: {
             getData: function () {

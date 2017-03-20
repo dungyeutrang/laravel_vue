@@ -4,7 +4,11 @@
 @endsection
 
 @section('contentheader_title')
-    Create Category
+    @if($id)
+        Update Category
+    @else
+        Create Category
+    @endif
 @endsection
 
 @section('main-content')
