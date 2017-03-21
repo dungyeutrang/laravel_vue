@@ -3,7 +3,8 @@ Vue.component('example', require('./index.vue'));
 const vm = new Vue({
     el: '#app',
     data : {
-        listData: []
+        listData: [],
+        a:1
     },
     methods : {
         getData: function () {

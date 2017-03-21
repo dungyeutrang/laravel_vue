@@ -4,6 +4,7 @@
 @endsection
 
 @section('contentheader_title')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css">
     @if($id)
         Update Category
     @else

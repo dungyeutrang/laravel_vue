@@ -8,6 +8,7 @@ window._ = require('lodash');
 
 window.$ = window.jQuery = require('jquery');
 
+
 require('bootstrap-less');
 
 require('admin-lte');
@@ -30,6 +31,14 @@ Vue.filter('formatDate', function (value) {
     if (value) {
         return moment(String(value)).format('YYYY-MM-DD')
     }
+});
+
+
+Vue.filter('isEmpty', function (value) {
+    if (value.trim()) {
+        return false;
+    }
+    return true;
 });
 
 

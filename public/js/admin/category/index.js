@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 171);
+/******/ 	return __webpack_require__(__webpack_require__.s = 179);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -27758,9 +27758,16 @@ window.Vue = __webpack_require__(157);
 Vue.use(VueResource);
 
 Vue.filter('formatDate', function (value) {
-  if (value) {
-    return moment(String(value)).format('YYYY-MM-DD');
-  }
+    if (value) {
+        return moment(String(value)).format('YYYY-MM-DD');
+    }
+});
+
+Vue.filter('isEmpty', function (value) {
+    if (value.trim()) {
+        return false;
+    }
+    return true;
 });
 
 /**
@@ -27772,13 +27779,13 @@ Vue.filter('formatDate', function (value) {
 window.axios = __webpack_require__(129);
 
 window.axios.defaults.headers.common = {
-  'X-CSRF-TOKEN': window.Laravel.csrfToken,
-  'X-Requested-With': 'XMLHttpRequest'
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest'
 };
 
 // Use trans function in Vue (equivalent to trans() Laravel Translations helper). See htmlheader.balde.php partial.
 Vue.prototype.trans = function (key) {
-  return _.get(window.trans, key, key);
+    return _.get(window.trans, key, key);
 };
 
 //Laravel AdminLTE login input field component
@@ -59330,11 +59337,12 @@ module.exports = function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(148);
-Vue.component('example', __webpack_require__(167));
+Vue.component('example', __webpack_require__(175));
 var vm = new Vue({
     el: '#app',
     data: {
-        listData: []
+        listData: [],
+        a: 1
     },
     methods: {
         getData: function getData() {
@@ -59354,7 +59362,10 @@ vm.getData();
 /* 162 */,
 /* 163 */,
 /* 164 */,
-/* 165 */
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59400,10 +59411,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['data'],
     methods: {
         remove: function remove(id) {
+            if (!confirm('Are you sure ?')) {
+                return;
+            }
             this.data.forEach(function (value, index, arr) {
                 if (value.id == id) {
                     Vue.http.get('/admin/category/delete/' + id).then(function (response) {
                         arr.splice(index, 1);
+                        var listParentId = [id];
+                        var isFind = true;
+                        while (isFind) {
+                            isFind = false;
+                            arr.forEach(function (vl, i, arr2) {
+                                if (listParentId.indexOf(vl.parent_id) >= 0) {
+                                    isFind = true;
+                                    console.log(arr2);
+                                    arr2.splice(i, 1);
+                                    arr = arr2;
+                                }
+                            });
+                        }
                     }, function (response) {
                         alert('Delete error !');
                     });
@@ -59415,15 +59442,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 166 */,
-/* 167 */
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(125)(
   /* script */
-  __webpack_require__(165),
-  /* template */
   __webpack_require__(168),
+  /* template */
+  __webpack_require__(176),
   /* scopeId */
   null,
   /* cssModules */
@@ -59450,7 +59482,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 168 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -59511,9 +59543,9 @@ if (false) {
 }
 
 /***/ }),
-/* 169 */,
-/* 170 */,
-/* 171 */
+/* 177 */,
+/* 178 */,
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(161);

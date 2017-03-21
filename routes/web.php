@@ -24,6 +24,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
         Route::get('/delete/{id}', 'CategoryController@delete')->name('category.delete');
         Route::get('/edit/{id?}', 'CategoryController@edit')->name('category.edit');
         Route::get('/getRecord/{id}', 'CategoryController@getRecord')->name('category.getRecord');
+        Route::post('/saveData', 'CategoryController@saveData')->name('category.saveData');
+        Route::get('/getListCategory', 'CategoryController@getListCategory')->name('category.getListCategory');
     });
 });
 

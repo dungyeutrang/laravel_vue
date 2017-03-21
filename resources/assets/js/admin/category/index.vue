@@ -39,10 +39,26 @@
         props: ['data'],
         methods: {
             remove: function (id) {
+                if (!confirm('Are you sure ?')) {
+                    return;
+                }
                 this.data.forEach(function (value, index, arr) {
                     if (value.id == id) {
                         Vue.http.get('/admin/category/delete/' + id).then(response => {
                             arr.splice(index, 1);
+                            let listParentId = [id];
+                            let isFind = true;
+                            while (isFind) {
+                                isFind = false;
+                                arr.forEach(function (vl, i, arr2) {
+                                    if (listParentId.indexOf(vl.parent_id) >= 0) {
+                                        isFind = true;
+                                        console.log(arr2);
+                                        arr2.splice(i, 1);
+                                        arr = arr2;
+                                    }
+                                })
+                            }
                         }, response => {
                             alert('Delete error !');
                         });
