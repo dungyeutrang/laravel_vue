@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/logout','Auth\LoginController@logout');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('admin');
     Route::group(['prefix' => 'category'], function () {
@@ -26,6 +26,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
         Route::get('/getRecord/{id}', 'CategoryController@getRecord')->name('category.getRecord');
         Route::post('/saveData', 'CategoryController@saveData')->name('category.saveData');
         Route::get('/getListCategory', 'CategoryController@getListCategory')->name('category.getListCategory');
+    });
+
+    Route::group(['prefix' => 'provider'], function () {
+        Route::get('/', 'ProviderController@index')->name('provider.index');
+        Route::get('/getData', 'ProviderController@getData')->name('provider.getData');
+        Route::get('/delete/{id}', 'ProviderController@delete')->name('provider.delete');
+        Route::get('/edit/{id?}', 'ProviderController@edit')->name('provider.edit');
     });
 });
 

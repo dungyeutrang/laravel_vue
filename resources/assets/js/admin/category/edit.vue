@@ -10,7 +10,7 @@
                     <div class="form-group" :class="{'has-error':validateName}">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" v-model="name" name="name" id="name">
-                        <span :class="{'hide':!validateName}" class="help-block">Name is required !</span>
+                        <span v-if="validateName"  class="help-block">Name is required !</span>
                     </div>
 
                     <div class="form-group">
@@ -29,7 +29,7 @@
                         <button class="btn btn-success" v-if="id">Update</button>
                         <button class="btn btn-success" v-else>Add</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>

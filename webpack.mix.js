@@ -14,6 +14,7 @@ const {mix} = require('laravel-mix');
 mix.js('resources/assets/js/app-landing.js', 'public/js/')
     .js('resources/assets/js/admin/category/index.js', 'public/js/admin/category')
     .js('resources/assets/js/admin/category/edit.js', 'public/js/admin/category')
+    .js('resources/assets/js/admin/provider/index.js', 'public/js/admin/provider')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .less('node_modules/bootstrap-less/bootstrap/bootstrap.less', 'public/css/bootstrap.css')
     .less('resources/assets/less/adminlte-app.less', 'public/css/adminlte-app.css')
@@ -40,6 +41,14 @@ mix.js('resources/assets/js/app-landing.js', 'public/js/')
     .copy('node_modules/admin-lte/plugins', 'public/plugins')
     .copy('node_modules/icheck/skins/square/blue.png', 'public/css')
     .copy('node_modules/icheck/skins/square/blue@2x.png', 'public/css');
+
+mix.webpackConfig({
+    resolve:{
+        alias: {
+            'vue-router$': 'vue-router/dist/vue-router.common.js'
+        }
+    }
+});
 
 mix.browserSync({
     proxy: 'freshfood.dev',

@@ -1,6 +1,7 @@
 {
   "/js/admin/category/edit.js": "/js/admin/category/edit.js",
   "/js/admin/category/index.js": "/js/admin/category/index.js",
+  "/js/admin/provider/index.js": "/js/admin/provider/index.js",
   "/js/app-landing.js": "/js/app-landing.js",
   "/css/app.css": "/css/app.css",
   "/css/bootstrap.css": "/css/bootstrap.css",

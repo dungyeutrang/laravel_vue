@@ -18,6 +18,8 @@ require('icheck');
 let moment = require('moment');
 let VueResource = require('vue-resource');
 
+
+
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean

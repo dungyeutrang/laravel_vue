@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class ProviderController extends Controller
 {
+
     public function index()
     {
-        return view('admin.category.index');
+        return view('admin.provider.index');
     }
 
+    public function getData()
+    {
+
+    }
 }
