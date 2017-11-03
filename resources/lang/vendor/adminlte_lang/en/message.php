@@ -129,4 +129,6 @@ return [
     'retrypepassword'         => 'Retype password',
     'fullname'                => 'Full Name',
     'category'                => 'Category',
+    'product'                 => 'Product',
+    'recommend'               => 'Product suggestions'
 ];
