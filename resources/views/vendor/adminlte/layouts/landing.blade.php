@@ -111,15 +111,49 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 </div><!--/ #features -->
             </section>
 
-            <section id="showcase" name="showcase">
-                <div id="showcase">
+            <section>
+                <div id="features">
                     <div class="container">
                         <div class="row">
                             <h1 class="centered">{{ trans('adminlte_lang::message.recommend') }}</h1>
                         </div>
                         <br>
-                        <br>
-                        <br>
+                        @foreach($productSuggests as $product)
+                        <div class="col-sm-4 col-lg-3 col-xs-12 col-md-3 product">
+                            <div class=" product-detail">
+                                <div class="avatar-product">
+                                    <img  onerror="this.src ='{{asset('/upload/no_image.jpg')}}'" src="{{asset($product->avatar)}}" class="img img-responsive img-product" />
+                                </div>
+                                <div class='description'>
+                                    <div class='product-name  text-center'><b>{{$product->name}}</b></div>
+                                    <div class='text-center cart_and_rating'>
+                                        <div>
+                                            <div  class="text-danger product-price">{{number_format($product->price,'0','.',',')}}.đ</div>
+                                            <div  class="text-danger add_to_cart"><a class='btn btn-sm btn-warning'>Add to cart</a></div>
+                                        </div>
+                                        <div>
+                                            <div class='product-like pull-left'>
+                                                <span><i class='fa fa-heart'></i> {{$product->num_like}}</span>
+                                            </div>
+                                            <div class='product-rating pull-right'>
+                                                <span product_id="{{$product->id}}" class='span-rating'>
+                                                    <i  rating ='1' class="fa fa-star rated icon-rating rated" aria-hidden="true"></i>
+                                                    <i rating ='2' class="fa fa-star icon-rating rated" aria-hidden="true"></i>
+                                                    <i rating ='3' class="fa fa-star-half-o icon-rating rated" aria-hidden="true"></i>
+                                                    <i rating ='4' class="fa fa-star-o icon-rating" aria-hidden="true"></i>
+                                                    <i rating ='5' class="fa fa-star-o icon-rating" aria-hidden="true"></i>
+                                                </span> 
+                                                <span>(100)</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+
+
                     </div><!-- /container -->
                 </div>
             </section>
@@ -143,64 +177,64 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="{{ asset('/js/app-landing.js') }}"></script>
         <script>
-            $(function(){
-                $('.carousel').carousel({
-                   interval: 3500
-               });
-               
-                $('.icon-rating').mouseover(function(){
-                   $(this).attr('last_class',$(this).attr('class'));
-                   $(this).attr('class','fa fa-star icon-rating');
-                   $(this).css("color",'orange');
-                   $(this).prevAll().each(function(index,e){
-                        $(e).attr('last_class',$(e).attr('class'));
-                        $(e).attr('class','fa fa-star icon-rating');
-                        $(e).css("color",'orange');
-                   });
-                   
-                   $(this).nextAll().each(function(index,e){
-                        $(e).attr('last_class',$(e).attr('class'));
-                        $(e).attr('class','fa fa-star-o icon-rating');
-                        $(e).css("color",'');
-                   });
-                });
-                
-                
-                $('.icon-rating').mouseleave(function(){
-                    
-                     $(this).siblings().each(function(index,e){
-                         var lastClass = $(this).attr('last_class');
-                        $(e).attr('class',lastClass);   
-                        $(e).attr('class',lastClass);                    
-                        if(!$(e).hasClass('rated')){
-                            $(e).css("color",'');                        
-                        }
-                   });
-                    
-                    var lastClass = $(this).attr('last_class');
-                    $(this).attr('class',lastClass);                    
-                    if(!$(this).hasClass('rated')){
-                        $(this).css("color",'');                        
-                    }
-                });
-                
-                $('.icon-rating').click(function(){
-                    productId = $(this).parent().attr('product_id');
-                    token = $('input[name="_token"]').val();
-                    rate = $(this).attr('rating');
-                    $.ajax({
-                       type:'post' ,
-                       data:{_token:token,product_id:productId,rate:rate},
-                       success:function(data){
-                          location.reload();
-                       },
-                       error:function(data){
-                           alert('Rating error');
-                       }
-                    });
-                });
-            });
-           
+$(function () {
+    $('.carousel').carousel({
+        interval: 3500
+    });
+
+    $('.icon-rating').mouseover(function () {
+        $(this).attr('last_class', $(this).attr('class'));
+        $(this).attr('class', 'fa fa-star icon-rating');
+        $(this).css("color", 'orange');
+        $(this).prevAll().each(function (index, e) {
+            $(e).attr('last_class', $(e).attr('class'));
+            $(e).attr('class', 'fa fa-star icon-rating');
+            $(e).css("color", 'orange');
+        });
+
+        $(this).nextAll().each(function (index, e) {
+            $(e).attr('last_class', $(e).attr('class'));
+            $(e).attr('class', 'fa fa-star-o icon-rating');
+            $(e).css("color", '');
+        });
+    });
+
+
+    $('.icon-rating').mouseleave(function () {
+
+        $(this).siblings().each(function (index, e) {
+            var lastClass = $(this).attr('last_class');
+            $(e).attr('class', lastClass);
+            $(e).attr('class', lastClass);
+            if (!$(e).hasClass('rated')) {
+                $(e).css("color", '');
+            }
+        });
+
+        var lastClass = $(this).attr('last_class');
+        $(this).attr('class', lastClass);
+        if (!$(this).hasClass('rated')) {
+            $(this).css("color", '');
+        }
+    });
+
+    $('.icon-rating').click(function () {
+        productId = $(this).parent().attr('product_id');
+        token = $('input[name="_token"]').val();
+        rate = $(this).attr('rating');
+        $.ajax({
+            type: 'post',
+            data: {_token: token, product_id: productId, rate: rate},
+            success: function (data) {
+                location.reload();
+            },
+            error: function (data) {
+                alert('Rating error');
+            }
+        });
+    });
+});
+
         </script>
     </body>
 </html>

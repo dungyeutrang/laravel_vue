@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-     return view('home');
-});
+Route::any('/', 'HomeController@index');
 
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function () {

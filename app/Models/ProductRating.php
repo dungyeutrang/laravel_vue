@@ -11,4 +11,8 @@ class ProductRating extends Model {
     protected $fillable = [
            'id', 'product_id', 'user_id', 'rating'
     ];
+    
+    public static function getAllRating(){
+        return self::select(['user_id','product_id','rating'])->get();
+    }
 }
