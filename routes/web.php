@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+     return view('home');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -36,4 +36,4 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     });
 });
 
-Route::get('/home', 'HomeController@index');
+Route::any('/home', 'HomeController@index');

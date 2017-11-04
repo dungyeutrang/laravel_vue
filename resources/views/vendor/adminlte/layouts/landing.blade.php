@@ -35,7 +35,6 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </head>
 
     <body data-spy="scroll" data-target="#navigation" data-offset="50">
-
         <div id="app">
             <!-- Fixed navbar -->
             <div id="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -72,6 +71,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                     <div class="container">
                         <div class="row">
                             <h1 class="centered">{{ trans('adminlte_lang::message.product') }}</h1>
+                            {{csrf_field()}}
                             @foreach($products as $product)
                             <div class="col-sm-4 col-lg-3 col-xs-12 col-md-3 product">
                                 <div class=" product-detail">
@@ -90,8 +90,8 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                                                     <span><i class='fa fa-heart'></i> {{$product->num_like}}</span>
                                                 </div>
                                                 <div class='product-rating pull-right'>
-                                                    <span class='span-rating'>
-                                                        <i rating ='1' class="fa fa-star rated icon-rating rated" aria-hidden="true"></i>
+                                                    <span product_id="{{$product->id}}" class='span-rating'>
+                                                        <i  rating ='1' class="fa fa-star rated icon-rating rated" aria-hidden="true"></i>
                                                         <i rating ='2' class="fa fa-star icon-rating rated" aria-hidden="true"></i>
                                                         <i rating ='3' class="fa fa-star-half-o icon-rating rated" aria-hidden="true"></i>
                                                         <i rating ='4' class="fa fa-star-o icon-rating" aria-hidden="true"></i>
@@ -146,7 +146,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             $(function(){
                 $('.carousel').carousel({
                    interval: 3500
-               })
+               });
                
                 $('.icon-rating').mouseover(function(){
                    $(this).attr('last_class',$(this).attr('class'));
@@ -163,7 +163,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                         $(e).attr('class','fa fa-star-o icon-rating');
                         $(e).css("color",'');
                    });
-                })
+                });
                 
                 
                 $('.icon-rating').mouseleave(function(){
@@ -182,8 +182,24 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                     if(!$(this).hasClass('rated')){
                         $(this).css("color",'');                        
                     }
-                })
-            })
+                });
+                
+                $('.icon-rating').click(function(){
+                    productId = $(this).parent().attr('product_id');
+                    token = $('input[name="_token"]').val();
+                    rate = $(this).attr('rating');
+                    $.ajax({
+                       type:'post' ,
+                       data:{_token:token,product_id:productId,rate:rate},
+                       success:function(data){
+                          location.reload();
+                       },
+                       error:function(data){
+                           alert('Rating error');
+                       }
+                    });
+                });
+            });
            
         </script>
     </body>
