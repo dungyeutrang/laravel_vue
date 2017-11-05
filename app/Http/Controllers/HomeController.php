@@ -18,6 +18,7 @@ class HomeController extends Controller {
     const K = 1;
     const THRESHOLD = 0.01;
     const MAX_DISPLAY = 5;
+    const RATING_LIKE = 2.5;
 
     /**
      * Create a new controller instance.
@@ -41,7 +42,7 @@ class HomeController extends Controller {
                 $listProductRating = ProductRating::getAllRating();
                 $listProductId = Product::getAllProductId();
                 $listUserId = User::getAllUserId();
-                $currentUserId = 2; //Auth::user()->id;
+                $currentUserId = Auth::user()->id;
 
                 $m = count($listUserId);
                 $n = count($listProductId);
@@ -68,34 +69,36 @@ class HomeController extends Controller {
                 foreach ($listProductRatedByCurrentUser as $rating) {
                     $totalRating += $rating->rating;
                 }
-                $ratingAverage = $totalRating / count($listProductRatedByCurrentUser);
+                if (!empty($listProductRatedByCurrentUser)) {
+                    $ratingAverage = $totalRating / count($listProductRatedByCurrentUser);
 
-                $dataPredictRating = $this->predictRating($m, $n, $data);
-                $dataRatingForCurrentUser = $dataPredictRating[$currentIndexUserId];
-                arsort($dataRatingForCurrentUser);
-                $listProductSuggest = array();
-                $j = 0;
-                foreach ($dataRatingForCurrentUser as $index => $ratingPredict) {
-                    $isExist = false;
-                    foreach ($listProductRatedByCurrentUser as $ratingRated) {
-                        if ($listProductId[$index]->id == $ratingRated->product_id) {
-                            $isExist = true;
+                    $dataPredictRating = $this->predictRating($m, $n, $data);
+                    $dataRatingForCurrentUser = $dataPredictRating[$currentIndexUserId];
+                    
+                    arsort($dataRatingForCurrentUser);
+                        $listProductSuggest = array();
+                    $j = 0;
+                    foreach ($dataRatingForCurrentUser as $index => $ratingPredict) {
+                        $isExist = false;
+                        foreach ($listProductRatedByCurrentUser as $ratingRated) {
+                            if ($listProductId[$index]->id == $ratingRated->product_id) {
+                                $isExist = true;
+                            }
+                        }
+                        if ($isExist) {
+                            continue;
+                        }
+                        if ($j < self::MAX_DISPLAY && $ratingPredict >= self::RATING_LIKE) {
+                            array_push($listProductSuggest, $listProductId[$index]->id);
+                            $j++;
                         }
                     }
-                    if ($isExist) {
-                        continue;
-                    }
-                    if ($j < self::MAX_DISPLAY && $ratingPredict >= $ratingAverage) {
-                        array_push($listProductSuggest, $listProductId[$index]->id);
-                        $j++;
-                    }
-                }
 
-                if (!empty($listProductSuggest)) {
-                    $allProductSuggest = Product::getProductByListProductId($listProductSuggest);
+                    if (!empty($listProductSuggest)) {
+                        $allProductSuggest = Product::getProductByListProductId($listProductSuggest);
+                    }
                 }
             }
-
 
             $products = Product::getAllProduct();
             return view('welcome', ['products' => $products, 'productSuggests' => $allProductSuggest]);

@@ -115,7 +115,9 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <div id="features">
                     <div class="container">
                         <div class="row">
+                            @if(count($productSuggests))
                             <h1 class="centered">{{ trans('adminlte_lang::message.recommend') }}</h1>
+                            @endif
                         </div>
                         <br>
                         @foreach($productSuggests as $product)
